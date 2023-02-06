@@ -1,13 +1,28 @@
 import Head from 'next/head'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useState, useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const log = (msg: string) => {
+  console.log(new Date().toUTCString() + ": " + msg)
+}
+
+function getRates() {
+  log("getRates")
+}
+
 export default function Home() {
+
+  useEffect(() => {
+    log("useEffect")
+    getRates()
+  }, [])
+
   return (
+    // React.Fragment shortcut
     <>
       <Head>
         <title>Currency Converter</title>
@@ -17,7 +32,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.center}>
-          Currency Converter
+          <p className={inter.className}>Currency Converter</p>
         </div>
         <div className={styles.description}>
           A simple browser-based Currency Converter
