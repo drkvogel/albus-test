@@ -16,6 +16,7 @@ const log = (msg: string) => {
 
 function getRates() {
   log("getRates")
+
   fetch(apiEndpoint + "?apikey=" + apiKey, {
     method: "GET",
     headers: {
@@ -34,28 +35,38 @@ function getRates() {
   .catch((error) => {
     console.log(error)
     alert(error)
+
+    // try to get cached exchange rates
+    if (typeof window !== 'undefined') {
+      const rates = localStorage.getItem("rates");
+      log("rates from localStorage: " + rates)
+      if (rates !== null) {
+        setRates(JSON.parse(rates))
+      } else {
+        alert("Exchange rates fetch failed and there are no cached exchange rates, sorry!")
+      }
+    }
   });
   // TODO improve error handling, error message
 }
 
 function setRates(data: JSON) {
   log(JSON.stringify(data))
+
+  localStorage.setItem("rates", JSON.stringify(data))
 }
 
 export default function Home() {
-
   const dataFetchedRef = useRef(false);
 
   useEffect(() => {
-    // setLoading(true)
+    log("useEffect")
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
-    log("useEffect")
     getRates()
   }, [])
 
   return (
-    // React.Fragment shortcut
     <>
       <Head>
         <title>Currency Converter</title>
