@@ -6,20 +6,43 @@ import { useState, useEffect, useRef } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
+// TODO: get key from env, not hardcode
+const apiKey: string = "NfO8LdX0HmFOokLomziuscOyczIpZFp6FQvnOAAm"       // Freecurrencyapi.com API key
+const apiEndpoint: string = "https://api.freecurrencyapi.com/v1/latest" // Freecurrencyapi.com endpoint
+
 const log = (msg: string) => {
   console.log(new Date().toUTCString() + ": " + msg)
 }
 
 function getRates() {
   log("getRates")
+  fetch(apiEndpoint + "?apiiikey=" + apiKey)
+  .then((res) => {
+    if (res.ok) {
+      return res.json()
+    }
+    throw new Error('API error: ' + res);
+  })
+  .then((data) => {
+    setRates(data)
+  })
+  .catch((error) => {
+    console.log(error)
+    alert("Error: " + error)
+  });
+  // TODO improve error handling, error message
+}
+
+function setRates(data: JSON) {
+  log(JSON.stringify(data))
 }
 
 export default function Home() {
 
-  const [counter, setCounter] = useState(0);
   const dataFetchedRef = useRef(false);
 
   useEffect(() => {
+    // setLoading(true)
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     log("useEffect")
