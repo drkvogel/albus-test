@@ -2,7 +2,7 @@ import Head from 'next/head'
 // import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +16,12 @@ function getRates() {
 
 export default function Home() {
 
+  const [counter, setCounter] = useState(0);
+  const dataFetchedRef = useRef(false);
+
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     log("useEffect")
     getRates()
   }, [])
