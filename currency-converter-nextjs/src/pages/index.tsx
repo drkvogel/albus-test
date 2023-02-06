@@ -16,19 +16,24 @@ const log = (msg: string) => {
 
 function getRates() {
   log("getRates")
-  fetch(apiEndpoint + "?apiiikey=" + apiKey)
+  fetch(apiEndpoint + "?apikey=" + apiKey, {
+    method: "GET",
+    headers: {
+        'Accept': 'application/json',
+    },
+  })
   .then((res) => {
     if (res.ok) {
       return res.json()
     }
-    throw new Error('API error: ' + res);
+    throw new Error("API response: status: " + res.status); //  + res.text()
   })
   .then((data) => {
     setRates(data)
   })
   .catch((error) => {
     console.log(error)
-    alert("Error: " + error)
+    alert(error)
   });
   // TODO improve error handling, error message
 }
