@@ -88,6 +88,52 @@ export default function Home() {
         <div className={styles.center}>
           <p className={inter.className}>Currency Converter</p>
         </div>
+
+        <div className="w-full max-w-xs">
+        <form className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <label htmlFor="src-select">Source currency</label>
+          <select name="src-select" onChange={handleSrcRateChange}>
+            <option value="Select a currency"> -- Select a currency -- </option>
+            {/* GBP ii. EUR iii. USD iv. ISK (Icelandic Króna) */}
+            <option value="GBP">Bristish Pound Sterling (GBP)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="ISK">Icelandic Króna (ISK)</option>
+          </select>
+
+          <label htmlFor="src-amount">Source amount</label>
+          <input
+            type="text"
+            id="sourceAmount"
+            className="input input__lg"
+            name="src-amount"
+            autoComplete="off"
+          />
+          <br />
+
+          <label htmlFor="dst-select">Target currency</label>
+          <select name="dst-select" onChange={handleSrcRateChange}>
+            <option value="Select a currency"> -- Select a currency -- </option>
+            {/* GBP ii. EUR iii. USD iv. ISK (Icelandic Króna) */}
+            <option value="GBP">Bristish Pound Sterling (GBP)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="ISK">Icelandic Króna (ISK)</option>
+          </select>
+
+          <label htmlFor="dst-amount">Target currency amount</label>
+          <input
+            type="text"
+            id="dst-amount"
+            className="input input__lg"
+            name="text"
+            autoComplete="off"
+          />
+          {/* <button type="reset">Reset</button> */}
+          <br />
+          <button type="submit">Convert</button>
+        </form>
+        </div>
         <div className={styles.description}>
           A simple browser-based Currency Converter
         </div>
