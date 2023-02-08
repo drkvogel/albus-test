@@ -76,6 +76,10 @@ export default function Home() {
     getRates()
   }, [])
 
+  var resetName = () => {
+
+  }
+
   return (
     <>
       <Head>
@@ -132,6 +136,7 @@ export default function Home() {
           {/* <button type="reset">Reset</button> */}
           <br />
           <button type="submit">Convert</button>
+          <button onClick={resetName}>Reset</button>
         </form>
         </div>
         <div className={styles.description}>
