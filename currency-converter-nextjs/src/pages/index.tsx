@@ -10,6 +10,8 @@ const inter = Inter({ subsets: ['latin'] })
 const apiKey: string = "NfO8LdX0HmFOokLomziuscOyczIpZFp6FQvnOAAm"       // Freecurrencyapi.com API key
 const apiEndpoint: string = "https://api.freecurrencyapi.com/v1/latest" // Freecurrencyapi.com endpoint
 
+let rates = {}
+
 const log = (msg: string) => {
   console.log(new Date().toUTCString() + ": " + msg)
 }
@@ -20,40 +22,48 @@ function getRates() {
   fetch(apiEndpoint + "?apikey=" + apiKey, {
     method: "GET",
     headers: {
-        'Accept': 'application/json',
+      'Accept': 'application/json',
     },
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json()
-    }
-    throw new Error("API response: status: " + res.status); //  + res.text()
-  })
-  .then((data) => {
-    setRates(data)
-  })
-  .catch((error) => {
-    console.log(error)
-    alert(error)
-
-    // try to get cached exchange rates
-    if (typeof window !== 'undefined') {
-      const rates = localStorage.getItem("rates");
-      log("rates from localStorage: " + rates)
-      if (rates !== null) {
-        setRates(JSON.parse(rates))
-      } else {
-        alert("Exchange rates fetch failed and there are no cached exchange rates, sorry!")
+    .then((res) => {
+      if (res.ok) {
+        return res.json()
       }
-    }
-  });
+      throw new Error("API response: status: " + res.status); //  + res.text()
+    })
+    .then((data) => {
+      setRates(data)
+    })
+    .catch((error) => {
+      console.log(error)
+      alert(error)
+
+      // try to get cached exchange rates
+      if (typeof window !== 'undefined') {
+        const rates = localStorage.getItem("rates");
+        log("rates from localStorage: " + rates)
+        if (rates !== null) {
+          setRates(JSON.parse(rates))
+        } else {
+          alert("Exchange rates fetch failed and there are no cached exchange rates, sorry!")
+        }
+      }
+    });
   // TODO improve error handling, error message
 }
 
 function setRates(data: JSON) {
   log(JSON.stringify(data))
-
+  rates = data;
   localStorage.setItem("rates", JSON.stringify(data))
+}
+
+function setSrcRate(amount: number) {
+
+}
+
+let handleSrcRateChange = (e: any) => {
+  setSrcRate(e.target.value)
 }
 
 export default function Home() {
