@@ -1,11 +1,14 @@
 
-# Technical Assignment for Albus Health
+# Currency Converter
+
+Technical Assignment for Albus Health
 
 By Chris Bird (chrisjbird@gmail.com)
 
 ### Prerequisites
 
-
+* Unix / Linux CLI
+* NodeJS with npm
 
 ### Installing / running
 
